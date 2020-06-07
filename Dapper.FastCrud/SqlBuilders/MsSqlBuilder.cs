@@ -46,8 +46,8 @@
             return this.ResolveWithCultureInvariantFormatter($@"
                 SELECT *
                     INTO #temp 
-                    FROM (SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WHERE 1=0 
-                        UNION SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WHERE 1=0) as u;
+                    FROM (SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WITH(NOLOCK) WHERE 1=0 
+                        UNION SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WITH(NOLOCK) WHERE 1=0) as u;
             
                 INSERT INTO {this.GetTableName()} ({this.ConstructColumnEnumerationForInsert()}) 
                     OUTPUT {dbInsertedOutputColumns} INTO #temp 
@@ -73,8 +73,8 @@
             return this.ResolveWithCultureInvariantFormatter($@"
                 SELECT *
                     INTO #temp 
-                    FROM (SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WHERE 1=0 
-                        UNION SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WHERE 1=0) as u;
+                    FROM (SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WITH(NOLOCK) WHERE 1=0 
+                        UNION SELECT {dbGeneratedColumns} FROM {this.GetTableName()} WITH(NOLOCK) WHERE 1=0) as u;
 
                 UPDATE {this.GetTableName()} 
                     SET {this.ConstructUpdateClause()}
