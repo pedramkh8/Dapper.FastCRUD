@@ -452,6 +452,7 @@
                 if (secondEntityJoinInstructionIndex == 0)
                 {
                     fromClauseBuilder.Append(secondEntitySqlBuilder.GetTableName());
+                    fromClauseBuilder.Append(" WITH(NOLOCK) ");
                 }
                 else
                 {
@@ -520,6 +521,7 @@
                     }
 
                     fromClauseBuilder.Append(secondEntitySqlBuilder.GetTableName());
+                    fromClauseBuilder.Append(secondEntitySqlBuilder.GetTableName(" WITH(NOLOCK) "));
                     fromClauseBuilder.Append(" ON ");
                     fromClauseBuilder.Append(joinClauseBuilder.ToString());
                 }
