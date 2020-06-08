@@ -664,7 +664,7 @@
                     $"UPDATE {this.GetTableName()} SET {this.ConstructUpdateClause()} WHERE {this.ConstructKeysWhereClause()}");
             if (this.RefreshOnUpdateProperties.Length > 0)
             {
-                sql += this.ResolveWithCultureInvariantFormatter($";SELECT {this.ConstructRefreshOnUpdateColumnSelection()} FROM {this.GetTableName()} WHERE {this.ConstructKeysWhereClause()};");
+                sql += this.ResolveWithCultureInvariantFormatter($";SELECT {this.ConstructRefreshOnUpdateColumnSelection()} FROM {this.GetTableName()} WITH(NOLOCK) WHERE {this.ConstructKeysWhereClause()};");
             }
 
             return sql;
@@ -718,8 +718,8 @@
         protected virtual string ConstructFullCountStatementInternal(FormattableString whereClause = null)
         {
             return (whereClause == null)
-                       ? this.ResolveWithCultureInvariantFormatter($"SELECT {this.ConstructCountSelectClause()} FROM {this.GetTableName()}")
-                       : this.ResolveWithSqlFormatter($"SELECT {this.ConstructCountSelectClause()} FROM {this.GetTableName()} WHERE {whereClause}");
+                       ? this.ResolveWithCultureInvariantFormatter($"SELECT {this.ConstructCountSelectClause()} FROM {this.GetTableName()} WITH(NOLOCK)")
+                       : this.ResolveWithSqlFormatter($"SELECT {this.ConstructCountSelectClause()} FROM {this.GetTableName()} WITH(NOLOCK) WHERE {whereClause}");
         }
 
         /// <summary>
@@ -733,7 +733,7 @@
             }
 
             return this.ResolveWithCultureInvariantFormatter(
-                    $"SELECT {this.ConstructColumnEnumerationForSelect()} FROM {this.GetTableName()} WHERE {this.ConstructKeysWhereClause()}");
+                    $"SELECT {this.ConstructColumnEnumerationForSelect()} FROM {this.GetTableName()} WITH(NOLOCK) WHERE {this.ConstructKeysWhereClause()}");
         }
 
         protected abstract string ConstructFullSelectStatementInternal(
